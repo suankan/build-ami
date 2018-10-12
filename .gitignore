@@ -1,0 +1,5 @@
+*.log
+LOG_FILE_IS_UNDEFINED
+.idea/
+.eclipse/
+*.iml
