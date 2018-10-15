@@ -1,0 +1,52 @@
+---
+# tasks file for ql_common_linux
+
+### EPEL repo
+
+- name: Ensure epel repo present
+  yum:
+    name: epel-release
+    state: present
+
+### Standard packages
+
+- name: Ensure common packages present
+  yum:
+    name: acl
+    state: present
+
+- name: Ensure common packages present
+  yum:
+    name: screen
+    state: present
+
+- name: Ensure common packages present
+  yum:
+    name: bash-completion
+    state: present
+
+- name: Ensure common packages present
+  yum:
+    name: dos2unix
+    state: present
+
+- name: Ensure common packages present
+  yum:
+    name: htop
+    state: present
+
+- name: Ensure common packages present
+  yum:
+    name: mlocate
+    state: present
+
+- name: Ensure common packages present
+  yum:
+    name: unzip
+    state: present
+
+- name: Ensure common packages present
+  yum:
+    name: wget
+    state: present
+
