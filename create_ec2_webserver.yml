@@ -1,0 +1,45 @@
+---
+- name: Provision EC2 instance
+  hosts: localhost
+  connection: local
+  gather_facts: false
+  tasks:
+    - name: Create EC2
+      ec2:
+        # Below variables are taken from group_vars
+        aws_access_key: "{{ aws_access_key }}"
+        aws_secret_key: "{{ aws_secret_key }}"
+        instance_tags:
+          Name: "webserver"
+        count_tag:
+          class: webserver
+        key_name: "{{ ec2_keypair }}"
+        instance_type: "{{ ec2_instance_type }}"
+        region: "{{ ec2_region }}"
+        image: "{{ ec2_image }}"
+        wait: yes
+        count: "{{ ec2_count }}"
+      # register details of the obtained instance for use in the next steps.
+      register: result_ec2
+
+    - name: Add EC2 instance to launched group
+      add_host:
+        hostname: "{{ item.public_dns_name }}"
+        groupname: launched
+        ansible_ssh_user: "ec2-user"
+        ansible_private_key_file: ".ssh/test01.pem"
+      # Referring to the obtained instance
+      with_items: "{{ result_ec2.instances }}"
+
+    - name: Wait for ssh to come up
+      # Feel free to experiment for reducing delay/timeout
+      wait_for: host="{{ item.public_dns_name }}" port=22 delay=60  timeout=300
+      with_items: "{{ result_ec2.instances }}"
+
+- name: Apply webserver role on EC2 instance
+  # Referring to the EC2 instance via in-memory inventory group "launched"
+  hosts: launched
+  become: True
+  gather_facts: True
+  roles:
+    - role: webserver
