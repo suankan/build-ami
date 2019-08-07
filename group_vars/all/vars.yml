@@ -1,0 +1,11 @@
+aws_access_key: "{{ vault_aws_access_key }}"
+aws_secret_key: "{{ vault_aws_secret_key }}"
+ec2_region: "ap-southeast-2"
+ec2_instance_type: "t2.nano"
+# Amazon Linux 2 AMI
+# ec2_image: "ami-04481c741a0311bbb"
+# Amazon Linux AMI 2018.03.0
+ec2_image: "ami-02fd0b06f06d93dfc"
+ec2_keypair: "test01"
+ec2_name: "ec2_for_creating_ami"
+ec2_count: "1"

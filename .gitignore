@@ -3,3 +3,6 @@ LOG_FILE_IS_UNDEFINED
 .idea/
 .eclipse/
 *.iml
+vault.yml
+*.retry
+.ssh/*
