@@ -8,6 +8,11 @@
     name: epel-release
     state: present
 
+  # According to https://aws.amazon.com/premiumsupport/knowledge-center/ec2-enable-epel/
+  # When installing EPEL repo in Amazon Linux it needs to be explicitely enabled first.
+- name: Enable epel repo
+  shell: yum-config-manager --enable epel
+
 ### Standard packages
 
 - name: Ensure common packages present
@@ -49,4 +54,3 @@
   yum:
     name: wget
     state: present
-
